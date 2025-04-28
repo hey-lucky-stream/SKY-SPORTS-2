@@ -1,1 +1,62 @@
-<iframe src="//stream.crichd.sc/update/skys2.php" width="100%" height="500px" marginheight="0" marginwidth="0" scrolling="no" frameborder="0" allowfullscreen  allow="encrypted-media"></iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mobile Plyr HLS Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+    }
+    .plyr__video-wrapper {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    video {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+
+<video id="player" playsinline controls></video>
+
+<script>
+  const video = document.getElementById('player');
+  const videoSrc = 'https://tgs2.mytime1.top:8088/mobile/stream1_320p/playlist.m3u8?id=3&pk=a1fc8045b1a625c490c0165a7877b78e169ad1d0e00f86aa164e4c9e7815939ba7a5efb7a46153c63a31fe7c2471c9223af9488ef87d0d16ad48a2042994fd18';
+
+  if (Hls.isSupported()) {
+    const hls = new Hls();
+    hls.loadSource(videoSrc);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+      video.play();
+    });
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = videoSrc;
+    video.addEventListener('loadedmetadata', function() {
+      video.play();
+    });
+  } else {
+    alert('This browser does not support HLS streaming.');
+  }
+
+  const player = new Plyr(video, {
+    controls: [
+      'play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'
+    ],
+    autoplay: true,
+    settings: ['speed'],
+  });
+</script>
+
+</body>
+</html>
