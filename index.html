@@ -1,62 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Mobile Plyr HLS Player</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JW Player Mobile</title>
+  <script src="https://cdn.jwplayer.com/libraries/IDzF9Zmk.js"></script>
   <style>
-    body {
+    html, body {
       margin: 0;
-      background-color: #000;
+      padding: 0;
+      background: black;
     }
-    .plyr__video-wrapper {
-      width: 100%;
-      max-width: 100%;
-      margin: 0 auto;
-    }
-    video {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 16 / 9;
-      background: #000;
+    #player {
+      width: 100vw;
+      height: 56.25vw; /* 16:9 ratio */
+      max-height: 100vh;
     }
   </style>
 </head>
 <body>
 
-<video id="player" playsinline controls></video>
+  <div id="player"></div>
 
-<script>
-  const video = document.getElementById('player');
-  const videoSrc = 'https://tgs2.mylife1.top:8088/mobile/stream3_320p/playlist.m3u8?vidictid=202079774608&id=11&pk=4e713b8fcea0b729371e96cc0d7449512eccd4a8d78ae78e9fc0486ca44d980d4c655689e634a502ceec5f4649b4ae36b4815b289915af6bf11ea109cbc76ed2';
-
-  if (Hls.isSupported()) {
-    const hls = new Hls();
-    hls.loadSource(videoSrc);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, function() {
-      video.play();
+  <script>
+    jwplayer("player").setup({
+      file: "https://embed.madplay.site/stream/crichd/master.m3u8/?id=skyscric",
+      width: "100%",
+      aspectratio: "16:9",
+      autostart: false,
+      mute: false,
+      stretching: "fill",
+      controls: true,
+      primary: "html5"
     });
-  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = videoSrc;
-    video.addEventListener('loadedmetadata', function() {
-      video.play();
-    });
-  } else {
-    alert('This browser does not support HLS streaming.');
-  }
-
-  const player = new Plyr(video, {
-    controls: [
-      'play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'
-    ],
-    autoplay: true,
-    settings: ['speed'],
-  });
-</script>
-
+  </script>
 </body>
 </html>
